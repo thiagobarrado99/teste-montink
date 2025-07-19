@@ -22,12 +22,14 @@ Build a "Mini ERP" to manage Orders, Products, Coupons and Inventory.
 - After creation, a new **Inventory** instance should be created for the **Product** ( 1 - 1 relation );
 - There should be another page for purchasing products, and the cart should be stored in session (must contain quantities and prices);
 - The shipping cost should be calculated based on the total cart price, using the logic below:
+
 | Cart price range ($)    | Shipping cost ($) |
 |-------------------------|-------------------|
 | Less than 52            | 20                |
 | 52 to 166.59            | 15                |
 | 166.60 to 200           | 20                |
 | More than 200           | 0 (free)          |
+
 - CEP should be verified using ViaCEP REST APIs ( https://viacep.com.br/ ).
 
 ## Bonus features:
