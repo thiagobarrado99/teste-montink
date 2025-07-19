@@ -22,12 +22,12 @@ Build a "Mini ERP" to manage Orders, Products, Coupons and Inventory.
 - After creation, a new **Inventory** instance should be created for the **Product** ( 1 - 1 relation );
 - There should be another page for purchasing products, and the cart should be stored in session (must contain quantities and prices);
 - The shipping cost should be calculated based on the total cart price, using the logic below:
-| Cart price ($)    | Shipping cost ($) |
-| ----------------- | ----------------- |
-| < 52              | 20                |
-| >= 52 & <= 166.59 | 15                |
-| > 166.59 & <= 200 | 20                |
-| > 200             | 0 (free)          |
+| Cart price range ($)    | Shipping cost ($) |
+|-------------------------|-------------------|
+| Less than 52            | 20                |
+| 52 to 166.59            | 15                |
+| 166.60 to 200           | 20                |
+| More than 200           | 0 (free)          |
 - CEP should be verified using ViaCEP REST APIs ( https://viacep.com.br/ ).
 
 ## Bonus features:
@@ -54,6 +54,6 @@ Build a "Mini ERP" to manage Orders, Products, Coupons and Inventory.
     - Coupon max uses along with expiration date
     - Shipping cost rules
 - I followed SOLID standards and divided the code into different layers. (SOLID is not considered overengineering).
-- I decided on MariaDB instead of MySQL because its easier, free and open-source, but since they are interchangeable this project works on both.
+- I decided on MariaDB instead of MySQL because it's easier, free and open-source, but since they share the same codebase and syntax, this project works on both.
 - Though Node and NPM aren't required to run this project, it's a better approach for running a Laravel project locally since Node will handle the queues.
-- And lastly, I decided to not make the admin dashboard and the user frontend/cart on the same page, for both security and to keep common standards/design patterns.
+- And lastly, I decided to not make the CRUDs and the user frontend/cart on the same page, for both security and common standards/design patterns.
