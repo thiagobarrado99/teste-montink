@@ -1,61 +1,59 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Montink Challenge:
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Build a "Mini ERP" to manage Orders, Products, Coupons and Inventory.
 
-## About Laravel
+## Requested Tech Stack:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- DB: MySQL
+- Frontend: Bootstrap
+- Backend: Plain PHP, CodeIgniter 3 or Laravel
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Used Tech Stack:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- DB: MariaDB 10.4.32
+- Frontend: Bootstrap 5
+- Backend: Laravel 12.20.0 running on PHP 8.4.10
+- Additional: Node v20.19.3 with NPM v10.8.2 (Not required to run the project)
 
-## Learning Laravel
+## Required features:
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+- DB should have at least 4 tables: **Orders**, **Products**, **Coupons** and **Inventory**;
+- Dashboard to create, update and delete products with fields **Name**, **Price**, **Variations** and **Inventory**;
+- After creation, a new **Inventory** instance should be created for the **Product** ( 1 - 1 relation );
+- There should be another page for purchasing products, and the cart should be stored in session (must contain quantities and prices);
+- The shipping cost should be calculated based on the total cart price, using the logic below:
+| Cart price ($)    | Shipping cost ($) |
+| ----------------- | ----------------- |
+| < 52              | 20                |
+| >= 52 & <= 166.59 | 15                |
+| > 166.59 & <= 200 | 20                |
+| > 200             | 0 (free)          |
+- CEP should be verified using ViaCEP REST APIs ( https://viacep.com.br/ ).
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## Bonus features:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- Product variations;
+- Coupon CRUD: Coupons should have expiration date and a minimum cart price to apply;
+- Notifications (via email) after order confirmation;
+- REST API (Mistakenly called "Webhook" in the original document) to update orders status.
 
-## Laravel Sponsors
+## Not required or bonus, but important features:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- A good frontend isn't mandatory, but will be taken into account;
+- Use MVC, Clean Code and Coding Best Practices;
+- Keep a simple codebase that solves the main problem and is maintainable;
+- Don't overengineer;
+- Handle common problems that may appear from user interaction.
 
-### Premium Partners
+## Important notes from the developer:
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- Since the challenge was quite easy and simple, I built some extra features that weren't asked, such as:
+    - Database fully managed by migrations
+    - Admin dashboard protected by login/password
+    - Inventory history
+    - Coupon max uses along with expiration date
+    - Shipping cost rules
+- I followed SOLID standards and divided the code into different layers. (SOLID is not considered overengineering).
+- I decided on MariaDB instead of MySQL because its easier, free and open-source, but since they are interchangeable this project works on both.
+- Though Node and NPM aren't required to run this project, it's a better approach for running a Laravel project locally since Node will handle the queues.
+- And lastly, I decided to not make the admin dashboard and the user frontend/cart on the same page, for both security and to keep common standards/design patterns.
