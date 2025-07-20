@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Coupon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,8 @@ class CouponController
      */
     public function index()
     {
-        //
+        $data = Coupon::all();
+        return view("dashboard.coupons.index", compact("data"));
     }
 
     /**
@@ -20,7 +22,7 @@ class CouponController
      */
     public function create()
     {
-        //
+        return view("dashboard.coupons.create");
     }
 
     /**
@@ -28,7 +30,15 @@ class CouponController
      */
     public function store(Request $request)
     {
-        //
+        $coupon = new Coupon($request->input());        
+        if($coupon->save())
+        {
+            toast('Cupom criado com sucesso!', 'success');
+            return to_route("coupons.index");
+        }
+
+        toast('Confira todos os campos e tente novamente!', 'error');
+        return back();
     }
 
     /**
@@ -36,7 +46,8 @@ class CouponController
      */
     public function edit(string $id)
     {
-        //
+        $coupon = Coupon::find($id);
+        return view("dashboard.coupons.edit", compact("coupon"));
     }
 
     /**
@@ -44,7 +55,17 @@ class CouponController
      */
     public function update(Request $request, string $id)
     {
-        //
+        $coupon = Coupon::find($id);
+        $coupon->fill($request->except(["user_id", "created_at", "updated_at"]));
+        
+        if($coupon->save())
+        {
+            toast('Cupom editado com sucesso!', 'success');
+            return to_route("coupons.index");
+        }
+
+        toast('Confira todos os campos e tente novamente!', 'error');
+        return back();
     }
 
     /**
@@ -52,6 +73,13 @@ class CouponController
      */
     public function destroy(string $id)
     {
-        //
+        $coupon = Coupon::find($id);
+        if($coupon->delete())
+        {
+            toast('Cupom deletado com sucesso!', 'success');
+        }else{
+            toast('Houve um erro deletando o cupom!', 'error');
+        }
+        return back();
     }
 }
