@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
@@ -29,7 +28,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|OrderTotal whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class OrderTotal extends Model
+class OrderTotal extends BaseModel
 {
     /**
      * The attributes that are mass assignable.

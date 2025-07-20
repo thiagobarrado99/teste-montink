@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @property int $id
@@ -36,7 +36,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Coupon whereUserId($value)
  * @mixin \Eloquent
  */
-class Coupon extends Model
+class Coupon extends BaseModel
 {
     /**
      * The attributes that are mass assignable.
@@ -65,6 +65,43 @@ class Coupon extends Model
         return [
             'expires_at' => 'datetime',
         ];
+    }
+
+    public static function boot()
+    {
+        parent::boot();
+
+        self::creating(function($model){
+            $model->user_id = Auth::user()->id;
+        });
+    }
+
+    public function clean(): void
+    {
+        parent::clean();
+
+        $this->discount_value = money_unformat($this->discount_value);
+        $this->minimum_price = money_unformat($this->minimum_price);
+    }
+
+    /**
+     * Get the minimum amount formatted
+     *
+     * @return string
+     */
+    public function minimumFormatted(): string
+    {
+        return $this->minimum_price ? money_format($this->minimum_price) : "";
+    }
+
+    /**
+     * Get the discount amount formatted
+     *
+     * @return string
+     */
+    public function discountFormatted(): string
+    {
+        return $this->is_percentage ? round($this->discount_value, 0) . "%" : money_format($this->discount_value);
     }
 
     public function user(): BelongsTo

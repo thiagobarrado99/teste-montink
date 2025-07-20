@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
@@ -39,7 +38,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Client whereZipcode($value)
  * @mixin \Eloquent
  */
-class Client extends Model
+class Client extends BaseModel
 {
     /**
      * The attributes that are mass assignable.

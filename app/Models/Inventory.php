@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -25,7 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Inventory whereUpdatedAt($value)
  * @mixin \Eloquent
  */
-class Inventory extends Model
+class Inventory extends BaseModel
 {
     /**
      * The attributes that are mass assignable.
