@@ -1,4 +1,4 @@
-<li class="nav-item @if("/".request()->path() == $item_url) active @endif">
+<li class="nav-item @if (($item_url === url('dashboard') && url()->current() === $item_url) || ($item_url !== url('dashboard') && (url()->current() === $item_url || Str::startsWith(url()->current(), $item_url . '/')))) active @endif">
     <a class="nav-link" href="{{ $item_url }}" @if (isset($item_click)) onclick="{{ $item_click }}" @endif>
         <i class="fas fa-fw {{ $item_icon }}"></i>
         <span>{{ $item_title }}</span>

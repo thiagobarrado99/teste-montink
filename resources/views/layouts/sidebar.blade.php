@@ -13,24 +13,26 @@
             'item_title' => 'Produtos',
             'item_url' => route('products.index'),
             'item_icon' => 'fa-tshirt',
+            'item_create_url' => route("products.create"),
         ])
         
         @include('sidebarItem', [
             'item_title' => 'Pedidos',
             'item_url' => route('orders.index'),
-            'item_icon' => 'fa-box',
+            'item_icon' => 'fa-box'
         ])
 
         @include('sidebarItem', [
             'item_title' => 'Cupons',
             'item_url' => route('coupons.index'),
             'item_icon' => 'fa-tag',
+            'item_create_url' => route("coupons.create"),
         ])
         
         @include('sidebarItem', [
             'item_title' => 'Clientes',
             'item_url' => route('clients.index'),
-            'item_icon' => 'fa-users',
+            'item_icon' => 'fa-users'
         ])
     </ul>
 </div>
