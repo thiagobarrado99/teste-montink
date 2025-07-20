@@ -14,14 +14,16 @@ return new class extends Migration
         Schema::create('order_totals', function (Blueprint $table) {
             $table->id();
             $table->foreignId("order_id");
+            $table->foreignId("product_id")->nullable();
             $table->boolean("is_discount")->default(false);
             $table->string("description", 128);
 
-            $table->decimal("value", 8, 2);
+            $table->decimal("total", 8, 2);
 
             $table->timestamps();
 
             $table->foreign("order_id")->references("id")->on("orders")->cascadeOnDelete();
+            $table->foreign("product_id")->references("id")->on("products")->onDelete("set null");
         });
     }
 
