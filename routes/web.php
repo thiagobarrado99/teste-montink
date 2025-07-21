@@ -34,6 +34,6 @@ Route::middleware(['auth'])->prefix("dashboard")->group(function () {
     ]);
 
     Route::resource("clients", ClientController::class, [
-        'except' => ['show']
+        'only' => ['index']
     ]);
 });
