@@ -9,7 +9,7 @@
 @include('dataTable', [
     'table_id' => 'table_clients',
     'models' => $data,
-    'column_defs' => '[{"targets": [1, 2], "responsivePriority": 90}, {"targets": [0], "responsivePriority": 1}]',
+    'column_defs' => '[{"targets": [1, 2], "responsivePriority": 90}, {"targets": [0, 3], "responsivePriority": 1}]',
     'columns' => [
         "id" => [
             "header" => "ID"

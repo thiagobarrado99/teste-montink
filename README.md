@@ -1,61 +1,140 @@
-# Montink Challenge:
+# 🚀 Montink Challenge
 
-Build a "Mini ERP" to manage Orders, Products, Coupons and Inventory.
+Build a **Mini ERP** to manage 🧾 Orders, 📦 Products, 🎟️ Coupons, and 🏷️ Inventory.
 
-## Requested Tech Stack:
+---
 
-- DB: MySQL
-- Frontend: Bootstrap
-- Backend: Plain PHP, CodeIgniter 3 or Laravel
+## 🧰 Requested Tech Stack
 
-## Used Tech Stack:
+- 🗄️ DB: MySQL
+- 🎨 Frontend: Bootstrap
+- 🖥️ Backend: Plain PHP, CodeIgniter 3 or Laravel
 
-- DB: MariaDB 10.4.32
-- Frontend: Bootstrap 5
-- Backend: Laravel 12.20.0 running on PHP 8.4.10
-- Additional: Node v20.19.3 with NPM v10.8.2 (Not required to run the project)
+---
 
-## Required Features:
+## ⚙️ Used Tech Stack
 
-- DB should have at least 4 tables: **Orders**, **Products**, **Coupons** and **Inventory**;
-- Dashboard to create, update and delete products with fields **_Name_**, **_Price_**, **_Variations_** and **_Inventory_**;
-- After creation, a new **Inventory** instance should be created for the **Product** ( 1 - 1 relation );
-- There should be another page for purchasing products, and the cart should be stored in session (must contain quantities and prices);
-- The shipping cost should be calculated based on the total cart price, using the logic below:
+- 🗄️ DB: MariaDB Server 11.8.2
+- 🎨 Frontend: Bootstrap 5
+- 🖥️ Backend: Laravel 12.20.0 (PHP 8.4.10)
+- ➕ Additional: Node v20.19.3 with NPM v10.8.2  
+  *(Node/NPM are optional — not required to run the project)*
 
-| Cart price range ($)    | Shipping cost ($) |
+---
+
+## 📋 Required Features
+
+- Database must have the following tables: **Orders**, **Products**, **Coupons**, and **Inventory**
+- Admin dashboard to **CRUD** Products with:
+  - **Name**
+  - **Price**
+  - **Variations**
+  - **Inventory**
+- Automatically create and link an **Inventory** instance when a Product is created (1:1 relationship)
+- A separate page for purchasing products, with the 🛒 cart stored in the session (quantities + prices)
+- 📦 **Shipping cost** calculation logic:
+
+| Cart Price Range ($)    | Shipping Cost ($) |
 |-------------------------|-------------------|
 | Less than 52            | 20                |
 | 52 to 166.59            | 15                |
 | 166.60 to 200           | 20                |
-| More than 200           | 0 (free)          |
+| More than 200           | **0 (Free)**      |
 
-- Zipcode should be verified using ViaCEP REST APIs ( https://viacep.com.br/ ).
+- 🧾 Zip code validation using [ViaCEP API](https://viacep.com.br/)
 
-## Bonus Features:
+---
 
-- Product variations;
-- Coupon CRUD: Coupons should have expiration date and a minimum cart price to apply;
-- Notifications (via email) after order confirmation;
-- REST API (Mistakenly called "Webhook" in the original document) to update orders status.
+## ✨ Bonus Features
 
-## Not required or bonus, but important features:
+- Product **variations**
+- Full **Coupon CRUD** with:
+  - Expiration date
+  - Minimum cart price to apply
+- 📧 Email notifications after order confirmation
+- 🔄 REST API (mistakenly referred to as "Webhook" in the original brief) to update order statuses
 
-- A good frontend isn't mandatory, but will be taken into account;
-- Use MVC, Clean Code and Coding Best Practices;
-- Keep a simple codebase that solves the main problem and is maintainable;
-- Don't overengineer;
-- Handle common problems that may appear from user interaction.
+---
 
-## Important notes from the developer:
+## 💡 Additional Features (Not Required but Added)
 
-- Since the challenge was quite easy and simple, I built some extra features that weren't asked, such as:
-    - Database fully managed by migrations
-    - Admin dashboard protected by login/password
-    - Inventory history
-    - Coupon max uses along with expiration date
-    - Shipping cost rules
-- I really **_prefer_** using strict SOLID standards, but since it was asked to not overengineer, I won't be strictly using it in this project.
-- I decided on MariaDB instead of MySQL because it's easier, free and open-source, but since they share the same codebase and syntax, this project works on both.
-- Though Node and NPM aren't required to run this project, it's a better approach for running a Laravel project locally since Node will handle the queues.
-- And lastly, I decided to not make the CRUDs and the user frontend/cart on the same page, for both security and common standards/design patterns.
+- Database fully managed by **migrations**
+- Admin dashboard 🔒 protected by login/password
+- 📈 Inventory history tracking
+- Coupon system with:
+  - Expiration date
+  - Max usage limits
+- Centralized logic for shipping cost rules
+
+---
+
+## 🧑‍💻 Developer Notes
+
+- Since the challenge was relatively simple, I implemented a few **extra features** to improve the project.
+- While I typically follow **strict SOLID** principles, I respected the request to **avoid overengineering**.
+- MariaDB was chosen over MySQL due to its **open-source** nature and compatibility.
+- Though **Node/NPM** aren't required, using them is a better local dev practice, especially for Laravel **queues**.
+- Admin and frontend/cart pages were **separated** for better **security** and adherence to **standard design patterns**.
+
+---
+
+## 🛠️ Installation
+
+To install and configure the project locally:
+
+1. Clone the repository
+2. Run the following commands in the project root:
+
+```bash
+composer install
+cp .env.example .env
+php artisan key:generate
+```
+
+3. Adjust the `.env` file to match your local environment
+
+---
+
+## 🗃️ Database
+
+You have two options to set up the database:
+
+### Option 1: Laravel Migrations
+
+```bash
+php artisan migrate --seed
+```
+
+> This will create all tables and seed them with default data.
+
+### Option 2: SQL Import
+
+Import the `setup.sql` file manually into your database to create and seed the tables.
+
+---
+
+## ▶️ Running the Project
+
+Choose one of the following options to start the app locally:
+
+### ✅ With Node/NPM (recommended):
+
+```bash
+composer run dev
+```
+
+### 🚫 Without Node/NPM:
+
+```bash
+php artisan serve
+```
+
+> Both commands will boot the system at **http://localhost:8000**
+
+## 🔐 Access credentials
+
+Below are the default credentials for admin login:
+
+User: **admin@montink.com**
+
+Pass: **password**
