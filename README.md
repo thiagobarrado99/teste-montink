@@ -80,6 +80,8 @@ Build a **Mini ERP** to manage 🧾 Orders, 📦 Products, 🎟️ Coupons, and 
 
 ## 🛠️ Installation
 
+_Make sure to use updated versions of both_ **PHP (8.4.x)** _and_ **Composer (2.8.x)**.
+
 To install and configure the project locally:
 
 1. Clone the repository
@@ -133,7 +135,7 @@ php artisan serve
 
 ## 🔐 Access credentials
 
-Below are the default credentials for admin login:
+Use these default credentials for admin login:
 
 User: **admin@montink.com**
 
