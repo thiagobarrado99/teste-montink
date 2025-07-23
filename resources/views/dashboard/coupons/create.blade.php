@@ -27,7 +27,7 @@
             $("#discount_percent_value").toggleClass("d-none", is_percentage);
         }
     </script>
-    <form id="create_form" action="{{ route('coupons.index') }}" method="post">
+    <form id="create_form" action="{{ route('coupons.store') }}" method="post">
         @csrf
         <div class="row">
             <div class="col-md-6 mb-2">

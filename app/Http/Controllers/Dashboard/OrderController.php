@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,7 +13,8 @@ class OrderController
      */
     public function index()
     {
-        //
+        $data = Order::all();
+        return view("dashboard.orders.index", compact("data"));
     }
 
     /**
