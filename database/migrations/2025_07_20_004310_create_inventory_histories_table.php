@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventory_history', function (Blueprint $table) {
+        Schema::create('inventory_histories', function (Blueprint $table) {
             $table->id();
             $table->integer("quantity");
             $table->string("description", 128);
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inventory_history');
+        Schema::dropIfExists('inventory_histories');
     }
 };
