@@ -32,7 +32,8 @@ class ProductController
 
     public function history(string $id)
     {
-        return view('dashboard.products.history');
+        $data = Product::with(["inventory", "products.inventory"])->where(["id" => $id])->first();
+        return view('dashboard.products.history', compact("data"));
     }
 
     /**

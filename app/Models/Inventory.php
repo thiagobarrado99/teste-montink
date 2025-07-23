@@ -55,6 +55,6 @@ class Inventory extends BaseModel
 
     public function inventoryHistory(): HasMany
     {
-        return $this->hasMany(InventoryHistory::class);
+        return $this->hasMany(InventoryHistory::class)->orderBy("created_at", "desc");
     }
 }
