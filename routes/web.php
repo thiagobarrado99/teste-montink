@@ -5,6 +5,7 @@ use App\Http\Controllers\Dashboard\CouponController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Dashboard\ShippingController;
 use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,10 @@ Route::middleware(['auth'])->prefix("dashboard")->group(function () {
 
     Route::resource("coupons", CouponController::class, [
         'except' => ['show']
+    ]);
+
+    Route::resource("shipping", ShippingController::class, [
+        'only' => ['index', 'store', 'destroy']
     ]);
 
     Route::resource("clients", ClientController::class, [

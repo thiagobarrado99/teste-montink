@@ -34,5 +34,11 @@
             'item_url' => route('clients.index'),
             'item_icon' => 'fa-users'
         ])
+        
+        @include('sidebarItem', [
+            'item_title' => 'Regras de envio',
+            'item_url' => route('shipping.index'),
+            'item_icon' => 'fa-truck'
+        ])
     </ul>
 </div>

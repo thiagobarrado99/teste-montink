@@ -32,7 +32,7 @@ class ProductController
 
     public function history(string $id)
     {
-        // 
+        return view('dashboard.products.history');
     }
 
     /**
