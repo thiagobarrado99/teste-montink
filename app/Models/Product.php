@@ -9,12 +9,15 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property int $id
  * @property string $name
- * @property string $price
+ * @property float $price
  * @property int|null $product_id
  * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\Inventory|null $inventory
  * @property-read Product|null $product
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, Product> $products
+ * @property-read int|null $products_count
  * @property-read \App\Models\User $user
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Product newQuery()
@@ -40,10 +43,6 @@ class Product extends BaseModel
         "price",
         "product_id",
         "user_id",
-    ];
-
-    protected $casts = [
-        'price' => 'float'
     ];
 
     public function clean(bool $assign_user = false): void

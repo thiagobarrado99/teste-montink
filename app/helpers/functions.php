@@ -53,7 +53,7 @@ if (!function_exists("money_unformat")) {
      */
     function money_unformat($value)
     {
-        if($value && !is_float($value))
+        if($value && str_contains($value, ','))
         {
             $value = preg_replace("/[^\d\.\,]/", "", $value);
             $value = str_replace(".", "", $value);
