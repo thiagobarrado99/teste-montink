@@ -22,6 +22,8 @@ Route::middleware(['auth'])->prefix("dashboard")->group(function () {
     });
 
     Route::resource("products", ProductController::class);
+    Route::get("/products/{id}/history", [ProductController::class, "history"])->name("products.history");        
+    Route::post("/products/massUpdate", [ProductController::class, "massUpdate"])->name("products.massUpdate");        
 
     Route::resource("orders", OrderController::class, [
         'except' => ['show']

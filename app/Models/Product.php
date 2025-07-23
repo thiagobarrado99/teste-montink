@@ -41,7 +41,11 @@ class Product extends BaseModel
         "product_id",
         "user_id",
     ];
-    
+
+    protected $casts = [
+        'price' => 'float'
+    ];
+
     public function clean(bool $assign_user = false): void
     {
         parent::clean(true);

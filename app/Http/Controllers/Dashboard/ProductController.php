@@ -22,12 +22,17 @@ class ProductController
      */
     public function show(string $id)
     {
-        $data = Product::with("products.inventory")->where(["id" => $id])->first();
+        $data = Product::with(["inventory", "products.inventory"])->where(["id" => $id])->first();
         if($data)
         {
             return response()->json($data);
         }
         return response()->json([], 404);
+    }
+
+    public function history(string $id)
+    {
+        // 
     }
 
     /**
@@ -87,7 +92,7 @@ class ProductController
      */
     public function edit(string $id)
     {
-        //
+
     }
 
     /**
@@ -95,7 +100,53 @@ class ProductController
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Product::find($id);
+        $product->fill($request->only(["name", "price"]));
+        if($product->save())
+        {
+            $product->products()->update(['price' => $product->price]);
+            toast('Produto editado com sucesso!', 'success');
+        }else{
+            toast('Houve um erro editando o produto!', 'error');
+        }
+        return back();
+    }
+
+    public function massUpdate(Request $request)
+    {
+        DB::beginTransaction();
+        try{
+            $data = $request->input("products");
+            if($data && is_array($data))
+            {
+                foreach($data as $key => $value)
+                {
+                    $product = Product::with("inventory")->where(["id" => $key])->first();
+                    $product->update(["name" => $value["name"]]);
+                    
+                    $diff = $value["quantity"] - $product->inventory->quantity;
+                    if($diff != 0)
+                    {
+                        $product->inventory->inventoryHistory()->create([
+                            "quantity" => $diff,
+                            "description" => "Alteração de estoque manual"
+                        ]);
+                    }
+
+                    $product->inventory->update(["quantity" => $value["quantity"]]);
+                }
+                DB::commit();
+                toast('Estoque alterado com sucesso!', 'success');
+                return to_route("products.index");
+            }else{
+                throw new \Exception("Dados invalidos.");
+            }
+        }catch(\Throwable $e){ 
+            toast('Tente novamente: ' . $e->getMessage(), 'error');
+        }
+
+        DB::rollBack();
+        return back();
     }
 
     /**
