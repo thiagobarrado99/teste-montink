@@ -21,9 +21,7 @@ Route::middleware(['auth'])->prefix("dashboard")->group(function () {
         Route::post("/logout", "logout")->name("logout");        
     });
 
-    Route::resource("products", ProductController::class, [
-        'except' => ['show']
-    ]);
+    Route::resource("products", ProductController::class);
 
     Route::resource("orders", OrderController::class, [
         'except' => ['show']
