@@ -67,18 +67,9 @@ class Coupon extends BaseModel
         ];
     }
 
-    public static function boot()
+    public function clean(bool $assign_user = false): void
     {
-        parent::boot();
-
-        self::creating(function($model){
-            $model->user_id = Auth::user()->id;
-        });
-    }
-
-    public function clean(): void
-    {
-        parent::clean();
+        parent::clean(true);
 
         $this->discount_value = money_unformat($this->discount_value);
         $this->minimum_price = money_unformat($this->minimum_price);

@@ -26,6 +26,11 @@ class InventoryHistory extends BaseModel
         "user_id",
     ];
 
+    public function clean(bool $assign_user = false): void
+    {
+        parent::clean(true);
+    }
+
     public function inventory(): BelongsTo
     {
         return $this->belongsTo(Inventory::class);

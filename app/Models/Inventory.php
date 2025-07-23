@@ -36,6 +36,18 @@ class Inventory extends BaseModel
         "quantity",
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        self::created(function($model){
+            $model->inventoryHistory()->create([
+                "quantity" => $model->quantity,
+                "description" => "Estoque inicial"
+            ]);
+        });
+    }    
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

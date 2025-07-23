@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * @method static \Illuminate\Database\Eloquent\Builder<static>|BaseModel newModelQuery()
@@ -30,5 +31,9 @@ class BaseModel extends Model
      *
      * @return void
      */
-    public function clean(){ }
+    public function clean(bool $assign_user = false){
+        if($assign_user && Auth::check()){
+            $this->user_id = Auth::user()->id;
+        }
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
  * @property int $id
@@ -39,10 +41,26 @@ class Product extends BaseModel
         "product_id",
         "user_id",
     ];
+    
+    public function clean(bool $assign_user = false): void
+    {
+        parent::clean(true);
+        $this->price = money_unformat($this->price);
+    }
+
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class);
+    }
 
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function inventory(): HasOne
+    {
+        return $this->hasOne(Inventory::class);
     }
 
     public function user(): BelongsTo
