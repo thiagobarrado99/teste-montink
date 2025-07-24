@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Dashboard;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController
 {
@@ -51,7 +52,14 @@ class ProductController
     {
         DB::beginTransaction();
         try{
-            $product = new Product($request->only(["name", "price"]));
+            $product = new Product($request->only(["name", "description", "price"]));
+            if($request->hasFile("picture"))
+            {
+                if($result = $request->file('picture')->store('/', 'public'))
+                {                        
+                    $product->picture = $result;
+                }
+            }
             if($product->save())
             {
                 $variation_array = $request->input("variations");
@@ -94,7 +102,20 @@ class ProductController
     public function update(Request $request, string $id)
     {
         $product = Product::find($id);
-        $product->fill($request->only(["name", "price"]));
+        $product->fill($request->only(["name", "description", "price"]));
+
+        if($request->hasFile("picture"))
+        {
+            if($result = $request->file('picture')->store('/', 'public'))
+            {                    
+                if($product->picture){
+                    Storage::disk('public')->delete($product->picture);
+                }
+    
+                $product->picture = $result;
+            }
+        }
+
         if($product->save())
         {
             $product->products()->update(['price' => $product->price]);
@@ -148,8 +169,12 @@ class ProductController
     public function destroy(string $id)
     {
         $product = Product::find($id);
+        $pic = $product->picture;
         if($product->delete())
         {
+            if($pic){
+                Storage::disk('public')->delete($pic);
+            }
             toast('Produto deletado com sucesso!', 'success');
         }else{
             toast('Houve um erro deletando o produto!', 'error');

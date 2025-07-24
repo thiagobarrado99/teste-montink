@@ -47,13 +47,13 @@
         }
     }
 </script>
-<form id="create_form" action="{{ route('products.store') }}" method="post">
+<form id="create_form" action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
     @csrf
     <div class="row">
         <div class="col-md-6 mb-2">
             <label class="w-100">
                 Nome*
-                <input class="w-100 form-control" type="text" maxlength="64" required name="name">
+                <input class="w-100 form-control" type="text" maxlength="128" required name="name">
             </label>
         </div>
         <div class="col-md-3 mb-2">
@@ -66,6 +66,20 @@
             <label class="w-100">
                 Estoque inicial
                 <input id="main_inventory" class="w-100 form-control" type="number" step="1" min="0" max="9999999" name="quantity" value="0">
+            </label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 mb-2">
+            <label class="w-100">
+                Descrição
+                <input class="w-100 form-control" type="text" maxlength="256" name="description">
+            </label>
+        </div>
+        <div class="col-md-4 mb-2">
+            <label class="w-100">
+                Foto
+                <input class="w-100 form-control" type="file" name="picture">
             </label>
         </div>
     </div>

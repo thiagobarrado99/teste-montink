@@ -90,7 +90,22 @@
                             <input class="w-100 form-control mask-money" type="text" name="price" value="${String(data.price).replace(".", ",")}">
                         </label>
                     </div>        
-                </div>`);
+                </div>
+                <div class="row">
+                    <div class="col-md-8 mb-2">
+                        <label class="w-100">
+                            Descrição
+                            <input class="w-100 form-control" type="text" maxlength="256" name="description" value="${data.description}">
+                        </label>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <label class="w-100">
+                            Foto
+                            <input class="w-100 form-control" type="file" name="picture">
+                        </label>
+                    </div>
+                </div>
+                `);
                 applyMoneyMask();
             });
     }
@@ -108,6 +123,7 @@
             "header" => "Informações",
             "model_function" => function ($model) { 
                 return $model->name .
+                        ($model->description ? "<br>".$model->description : "") .
                         (count($model->products) > 0 ? "<br>Variações: " . count($model->products) : "") .
                         "<br><span style='font-size: 80%; line-height: 80%;'>Criado por: " . $model->user->name . "</span>";
             }
@@ -152,12 +168,12 @@
     </div>
 </div>
 <div class="modal fade" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="edit_modal" aria-hidden="true">
-    <div class="modal-dialog modal-md" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Alterar produto</h5>
             </div>
-            <form id="edit_form" method="post">
+            <form id="edit_form" method="post" enctype="multipart/form-data">
                 @method("PUT")
                 @csrf
                 <div id="edit_modal_body" class="modal-body">
