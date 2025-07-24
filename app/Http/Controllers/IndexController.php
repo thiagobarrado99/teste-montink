@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -9,7 +10,8 @@ class IndexController
 {
     public function index()
     {
-        return view("index.index");
+        $products = Product::with(["inventory", "products.inventory"])->where(["product_id" => null])->get();
+        return view("index.index", compact("products"));
     }
 
     public function login()
