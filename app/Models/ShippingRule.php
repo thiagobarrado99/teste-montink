@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Auth;
 /**
  * @property int $id
  * @property int $type
- * @property float|null $range_start
- * @property float|null $range_end
- * @property float $price
+ * @property string|null $range_start
+ * @property string|null $range_end
+ * @property string $price
  * @property int|null $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at

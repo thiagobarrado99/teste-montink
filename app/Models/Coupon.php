@@ -10,8 +10,8 @@ use Illuminate\Support\Facades\Auth;
  * @property string $name
  * @property string $code
  * @property int $is_percentage
- * @property float $discount_value
- * @property float|null $minimum_price
+ * @property string $discount_value
+ * @property string|null $minimum_price
  * @property int|null $max_uses
  * @property int $total_uses
  * @property \Illuminate\Support\Carbon $expires_at

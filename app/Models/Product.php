@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * @property int $id
  * @property string $name
- * @property float $price
+ * @property string $price
  * @property int|null $product_id
  * @property int $user_id
  * @property \Illuminate\Support\Carbon|null $created_at
@@ -40,6 +40,8 @@ class Product extends BaseModel
      */
     protected $fillable = [
         "name",
+        "description",
+        "picture",
         "price",
         "product_id",
         "user_id",
