@@ -52,7 +52,7 @@ Build a **Mini ERP** to manage 🧾 Orders, 📦 Products, 🎟️ Coupons, and 
   - Expiration date
   - Minimum cart price to apply
 - 📧 Email notifications after order confirmation
-- 🔄 REST API (mistakenly referred to as "Webhook" in the original brief) to update order statuses
+- 🔄 REST API (referred to as "Webhook" in the original brief) to update order statuses
 
 ---
 
