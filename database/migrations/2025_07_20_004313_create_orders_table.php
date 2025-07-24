@@ -17,6 +17,7 @@ return new class extends Migration
 
             $table->foreignId("client_id");
             $table->foreignId("coupon_id")->nullable();
+            $table->tinyInteger("status");
 
             $table->timestamps();
 
