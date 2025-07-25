@@ -48,6 +48,28 @@ class Inventory extends BaseModel
         });
     }    
 
+    public function increase(int $quantity): void
+    {
+        $this->quantity += $quantity;
+        $this->save();
+        
+        $this->inventoryHistory()->create([
+            "quantity" => $quantity,
+            "description" => "Devolução"
+        ]);
+    }
+
+    public function decrease(int $quantity): void
+    {
+        $this->quantity -= $quantity;
+        $this->save();
+
+        $this->inventoryHistory()->create([
+            "quantity" => -$quantity,
+            "description" => "Venda"
+        ]);
+    }
+
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);

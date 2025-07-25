@@ -160,7 +160,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button data-bs-dismiss="modal" class="btn btn-danger">Voltar</button>
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-danger">Voltar</button>
                     <input type="submit" class="btn btn-success" value="Confirmar alterações">
                 </div>
             </form>
@@ -179,7 +179,7 @@
                 <div id="edit_modal_body" class="modal-body">
                 </div>
                 <div class="modal-footer">
-                    <button data-bs-dismiss="modal" class="btn btn-danger">Voltar</button>
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-danger">Voltar</button>
                     <input type="submit" class="btn btn-success" value="Confirmar alterações">
                 </div>
             </form>

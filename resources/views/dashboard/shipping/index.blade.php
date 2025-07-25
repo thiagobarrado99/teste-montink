@@ -153,7 +153,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button data-bs-dismiss="modal" class="btn btn-danger">Voltar</button>
+                    <button type="button" data-bs-dismiss="modal" class="btn btn-danger">Voltar</button>
                     <input type="submit" class="btn btn-success" value="Criar">
                 </div>
             </form>

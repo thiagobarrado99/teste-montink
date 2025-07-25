@@ -46,7 +46,12 @@ class OrderController
      */
     public function update(Request $request, string $id)
     {
-        //
+        $order = Order::find($id);
+        $order->status = $request->input("status");
+        $order->save();
+
+        toast("Status alterado com sucesso!", "success");
+        return back();
     }
 
     /**

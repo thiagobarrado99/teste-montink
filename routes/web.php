@@ -13,6 +13,17 @@ Route::controller(IndexController::class)->group(function () {
     Route::get("/", "index")->name("index");
     Route::get("/login", "login")->name("login");
     Route::post("/login", "doLogin");
+
+    Route::get("/cart", "cart")->name("cart");
+
+    Route::get("/shipping", "shipping")->name("cart.shipping");
+    Route::post("/shipping", "finishOrder")->name("cart.finish");
+
+    Route::get("/cep/{cep}", "cep")->name("cep");
+
+    Route::get("/products/{id}", "productInfo");
+    Route::post("/products/{id}", "productAdd")->name("cart.add");
+    Route::delete("/products/{id}", "productRemove")->name("cart.remove");
 });
 
 Route::middleware(['auth'])->prefix("dashboard")->group(function () {
