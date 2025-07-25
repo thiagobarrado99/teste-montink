@@ -1,13 +1,19 @@
+@php
+$cart = session('cart', []);
+@endphp
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf_token" content="{{ csrf_token() }}" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Montink - Moda com Estilo</title>
     <!-- Bootstrap 5 CSS -->
     <link rel="stylesheet" href="/styles/bootstrap.min.css">
     <!-- Font Awesome for icons -->
     <script type="module" src="https://kit.fontawesome.com/11551bd62e.js" crossorigin="anonymous"></script>
+    <script src="/scripts/jquery.min.js"></script>
     <style>
         body {
             padding-top: 80px;
@@ -73,7 +79,7 @@
     <!-- Fixed Header -->
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="/">
                 <img src="/logopreta.png" alt="Montink" class="logo">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -91,7 +97,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#" id="cartButton">
                             <i class="fas fa-shopping-cart"></i>
-                            <span class="badge bg-primary rounded-pill" id="cartCount">0</span>
+                            <span class="badge bg-primary rounded-pill" id="cartCount">{{ count($cart) }}</span>
                         </a>
                     </li>
                 </ul>
@@ -103,14 +109,22 @@
     <div class="cart-popup p-3" id="cartPopup">
         <h5 class="mb-3">Seu Carrinho</h5>
         <div id="cartItems">
+            @if(count($cart) > 0)
+            @foreach ($cart as $product)
+            <div class="d-flex justify-content-between mb-2">
+                <div>
+                    <span class="fw-bold">{{ $product["name"] }}</span>
+                    <br>
+                    <small>x{{ $product["quantity"] }}</small>
+                </div>
+            </div>
+            @endforeach
+            @else
             <p class="text-muted">Seu carrinho está vazio</p>
+            @endif
         </div>
         <hr>
-        <div class="d-flex justify-content-between mb-2">
-            <strong>Total:</strong>
-            <span id="cartTotal">R$ 0,00</span>
-        </div>
-        <button class="btn btn-primary w-100">Finalizar Compra</button>
+        <a href="{{ route('cart') }}" class="btn btn-primary w-100">Finalizar Compra</a>
     </div>
 
     <!-- Main Content -->
@@ -149,14 +163,17 @@
     </footer>
 
     <!-- jQuery and Bootstrap JS -->
-	<script src="/scripts/jquery.min.js"></script>
     <script src="/scripts/popper.min.js"></script>
     <script src="/scripts/bootstrap.bundle.min.js"></script>
     
     <script>
-        $(document).ready(function() {
-            let cart = [];
-            
+        $(document).ready(function() {           
+            $.ajaxSetup({
+                "headers": {
+                    'X-CSRF-TOKEN': $('meta[name="csrf_token"]').attr('content')
+                }
+            });
+
             // Toggle cart popup
             $('#cartButton').click(function(e) {
                 e.preventDefault();
@@ -169,90 +186,6 @@
                     $('#cartPopup').hide();
                 }
             });
-            
-            // Add to cart functionality
-            $('.add-to-cart').click(function() {
-                const productId = $(this).data('id');
-                const productName = $(this).data('name');
-                const productPrice = parseFloat($(this).data('price'));
-                
-                // Check if product already in cart
-                const existingItem = cart.find(item => item.id === productId);
-                
-                if (existingItem) {
-                    existingItem.quantity += 1;
-                } else {
-                    cart.push({
-                        id: productId,
-                        name: productName,
-                        price: productPrice,
-                        quantity: 1
-                    });
-                }
-                
-                updateCart();
-                
-                Swal.fire({
-                    toast: true,
-                    position: 'bottom-end', // top, top-start, top-end, center, bottom, etc.
-                    icon: 'success',     // success, error, warning, info, question
-                    title: `${productName} adicionado ao carrinho!`,
-                    showConfirmButton: false,
-                    timer: 3000,
-                    timerProgressBar: true,
-                });
-
-            });
-            
-            // Update cart display
-            function updateCart() {
-                // Update cart count
-                const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
-                $('#cartCount').text(itemCount);
-                
-                // Update cart items
-                const cartItems = $('#cartItems');
-                
-                if (cart.length === 0) {
-                    cartItems.html('<p class="text-muted">Seu carrinho está vazio</p>');
-                    $('#cartTotal').text('R$ 0,00');
-                    return;
-                }
-                
-                let itemsHtml = '';
-                let total = 0;
-                
-                cart.forEach(item => {
-                    const itemTotal = item.price * item.quantity;
-                    total += itemTotal;
-                    
-                    itemsHtml += `
-                        <div class="d-flex justify-content-between mb-2">
-                            <div>
-                                <span class="fw-bold">${item.name}</span>
-                                <br>
-                                <small>${item.quantity} x R$ ${item.price.toFixed(2)}</small>
-                            </div>
-                            <div>
-                                <span>R$ ${itemTotal.toFixed(2)}</span>
-                                <button class="btn btn-sm btn-outline-danger ms-2 remove-item" data-id="${item.id}">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-                    `;
-                });
-                
-                cartItems.html(itemsHtml);
-                $('#cartTotal').text(`R$ ${total.toFixed(2)}`.replace('.', ','));
-                
-                // Add event listeners to remove buttons
-                $('.remove-item').click(function() {
-                    const itemId = $(this).data('id');
-                    cart = cart.filter(item => item.id !== itemId);
-                    updateCart();
-                });
-            }
         });
     </script>
     @include('sweetalert::alert')
