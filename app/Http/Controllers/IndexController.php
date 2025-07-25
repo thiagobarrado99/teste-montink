@@ -93,22 +93,22 @@ class IndexController
             {
                 switch($rule->type)
                 {
-                    case "0": default:
-                        if($total <= $rule->range_start)
+                    case "0": case 0: default:
+                        if($total <= floatval($rule->range_start))
                         {
                             $shipping_cost = $rule->price;
                             continue 2;
                         }
                         break;
-                    case "1":
-                        if($total >= $rule->range_start)
+                    case "1": case 1:
+                        if($total >= floatval($rule->range_start))
                         {
                             $shipping_cost = $rule->price;
                             continue 2;
                         }
                         break;
-                    case "2":
-                        if($total >= $rule->range_start && $total <= $rule->end)
+                    case "2": case 2:
+                        if($total >= floatval($rule->range_start) && $total <= floatval($rule->range_end))
                         {
                             $shipping_cost = $rule->price;
                             continue 2;
