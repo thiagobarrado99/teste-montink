@@ -16,13 +16,13 @@ return new class extends Migration
             $table->string("name", 256);
             $table->string("tax_id", 16)->nullable()->unique();
             $table->string("email", 256)->unique();
-            $table->string("phone", 16)->nullable()->unique();
+            $table->string("phone", 16)->unique();
 
             $table->string("zipcode", 16);
             $table->string("state", 32)->nullable();
             $table->string("city", 128)->nullable();
-            $table->string("neighborhood", 16)->nullable();
-            $table->string("address", 16)->nullable();
+            $table->string("neighborhood", 256)->nullable();
+            $table->string("address", 256)->nullable();
             $table->string("number", 16)->nullable();
 
             $table->timestamps();
