@@ -45,7 +45,7 @@
                 $result = "";
                 foreach($model->orderTotals as $total)
                 {
-                    $result .= $total->description . "<span class='fw-bold'>&nbsp;(".money_format($total->total).")</span><br>";
+                    $result .= $total->description . "<span class='fw-bold ".($total->is_discount ? "text-success" : "")."'>&nbsp;(".money_format($total->total).")</span><br>";
                 }
                 return $result;
             }

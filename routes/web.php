@@ -7,6 +7,7 @@ use App\Http\Controllers\Dashboard\OrderController;
 use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Dashboard\ShippingController;
 use App\Http\Controllers\IndexController;
+use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Support\Facades\Route;
 
 Route::controller(IndexController::class)->group(function () {
@@ -15,6 +16,7 @@ Route::controller(IndexController::class)->group(function () {
     Route::post("/login", "doLogin");
 
     Route::get("/cart", "cart")->name("cart");
+    Route::post("/coupon", "coupon")->name("coupon.check");
 
     Route::get("/shipping", "shipping")->name("cart.shipping");
     Route::post("/shipping", "finishOrder")->name("cart.finish");
@@ -24,6 +26,8 @@ Route::controller(IndexController::class)->group(function () {
     Route::get("/products/{id}", "productInfo");
     Route::post("/products/{id}", "productAdd")->name("cart.add");
     Route::delete("/products/{id}", "productRemove")->name("cart.remove");
+
+    Route::post("/orders/{id}", "orderWebhook")->name("orders.webhook")->withoutMiddleware([VerifyCsrfToken::class]);
 });
 
 Route::middleware(['auth'])->prefix("dashboard")->group(function () {

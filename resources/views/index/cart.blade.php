@@ -1,9 +1,6 @@
 @extends('layouts.index')
 
 @section('content')
-@php
-$total = 0;
-@endphp
 <script>
     function RemoveFromCart(sender, id)
     {
@@ -12,6 +9,15 @@ $total = 0;
 
         $("#remove_form").attr("action", `/products/${id}`);
         $("#remove_form").submit();
+    }
+
+    function CheckCoupon()
+    {
+        $("#coupon_code").attr("readonly", true);
+        $("#coupon_btn").html("Aplicando...");
+        $("#coupon_btn").toggleClass("disabled", true);
+
+        $("#coupon_form").submit();
     }
 </script>
 <h1 class="mb-4">Carrinho de compras</h1>
@@ -29,9 +35,6 @@ $total = 0;
     </thead>
     <tbody>
     @foreach($products as $product)
-        @php
-        $total += $cart[$product->id]["quantity"] * $product->price;
-        @endphp
         <tr class="border-top border-bottom">
             <td>{{ $cart[$product->id]["quantity"] }}x {{ ($product->product ? $product->product->name.">".$product->name : $product->name) }}</td>
             <td>{{ money_format($cart[$product->id]["quantity"] * $product->price) }}</td>
@@ -40,7 +43,19 @@ $total = 0;
     @endforeach
     </tbody>
 </table>
-<p class="mt-4 fw-bold text-end">Total: {{ money_format($total) }}</p>
+<form id="coupon_form" action="/coupon" method="post">
+    @csrf
+    <div class="mt-4 fw-bold text-end">
+        Cupom de desconto:
+        <input id="coupon_code" name="code" class="form-control d-inline-block" style="width: auto;" type="text" maxlength="16" @if($coupon) value="{{ $coupon }}" @endif />
+        <button id="coupon_btn" onclick="CheckCoupon();" class="btn btn-primary"><i class="fas fa-fw fa-check"></i> Aplicar</button>
+    </div>
+</form>
+<p class="mb-1 fw-bold text-end">Frete: {{ money_format($shipping) }}</p>
+@if($coupon_discount)
+<p class="mb-1 fw-bold text-success text-end">Cupom: -{{ money_format($coupon_discount) }}</p>
+@endif
+<p class="mb-1 fw-bold text-end">Total: {{ money_format($total) }}</p>
 <hr class="my-3">
 <div class="row justify-content-end">
     <div class="col-sm-3">
