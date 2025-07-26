@@ -75,6 +75,7 @@ Build a **Mini ERP** to manage 🧾 Orders, 📦 Products, 🎟️ Coupons, and 
 - MariaDB was chosen over MySQL due to its **open-source** nature and compatibility.
 - Though **Node/NPM** aren't required, using them is a better local dev practice, especially for Laravel **queues**.
 - Admin and frontend/cart pages were **separated** for better **security** and adherence to **standard design patterns**.
+- **Email notifications on order creation are sent directly to the Laravel Log** (/storage/logs/laravel.log) as a full HTML formatted email. Since we don't want to use a mail provider on a local environment, emails go to the log file.
 
 ---
 
@@ -94,7 +95,7 @@ php artisan key:generate
 php artisan storage:link
 ```
 
-3. Adjust the `.env` file to match your local environment
+3. Adjust the `.env` file to match your local environment database credentials
 
 ---
 
@@ -141,3 +142,18 @@ Use these default credentials for admin login:
 User: **admin@montink.com**
 
 Pass: **password**
+
+
+## 🪝 Webhook details
+
+Webhook URL: /orders/{order_id}
+
+Webhook Method: POST
+
+Webhook Payload example: {"status": 2}
+
+The webhook will accept both JSON and formdata.
+
+
+For security reasons, the webhook expects a "X-SECRET" header with the value:
+f457243ffeb6167592100fe4b09673d893f84cd3f101973d077213ffb0577e1f
